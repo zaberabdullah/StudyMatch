@@ -26,6 +26,14 @@ export default function ChatWidget() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, typing]);
 
+  useEffect(() => {
+    function handleOpenRequest() {
+      setOpen(true);
+    }
+    window.addEventListener("studymatch:open-chat", handleOpenRequest);
+    return () => window.removeEventListener("studymatch:open-chat", handleOpenRequest);
+  }, []);
+
   if (!user) return null;
 
   async function send(text: string) {
